@@ -2,7 +2,12 @@ import { createContext, useState } from 'react';
 
 const UserContext = createContext();
 
+
 const UserProvider = ({ children }) => {
+  const [currentPlayer, setCurrentPlayer] = useState();
+  const [turn, setTurn] = useState('X');
+  const [active, setActive] = useState();
+  const [message, setMessage] = useState('');
   const [boxes, setBoxes] = useState([
     {
       space: 1,
@@ -40,25 +45,31 @@ const UserProvider = ({ children }) => {
       space: 9,
       content: '',
     },
-
   ]);
-  const [currentPlayer, setCurrentPlayer] = useState();
-  const [active, setActive] = useState();
-  const [message, setMessage] = useState('');
+
   const setSpace = (space) => {
     setBoxes((prevBoard) => {
       return prevBoard.map((box) => {
-        return box.space === space ? { ...box, content: 'x' } : box;
+        return box.space === space ? { ...box, content: turn } : box;
       });
     });
   };
+    
+  function switchTurn() {
+    if (turn === 'X') {
+      setTurn('O');
+    } else {
+      setTurn('X');
+    }
+  }
 
-  return <UserContext.Provider value={{ currentPlayer, setCurrentPlayer, message, boxes, setMessage, setBoxes, setSpace }}>{children}</UserContext.Provider>;
-
+  return (
+    <UserContext.Provider
+      value={{ currentPlayer, setCurrentPlayer, message, boxes, setMessage, setBoxes, setSpace, setTurn, turn, switchTurn }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
 };
 
-
-
-export { UserProvider, UserContext };
-
-
+export { UserProvider, UserContext, };
