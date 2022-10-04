@@ -45,7 +45,6 @@ const UserProvider = ({ children }) => {
       content: '',
     },
   ]);
-
   const setSpace = (space) => {
     setBoxes((prevBoard) => {
       return prevBoard.map((box) => {
@@ -70,6 +69,45 @@ const UserProvider = ({ children }) => {
     }
   }
 
+  const resetGame = () => {
+    setBoxes((prevBoard) => {
+      return prevBoard.map((box) => {
+        return { ...box, content: '' };
+      });
+    });
+  };
+
+  if (boxes[0].content === 'X' && boxes[1].content === 'X' && boxes[2].content === 'X') {
+    window.alert('X won');
+  }
+  if (boxes[3].content === 'X' && boxes[4].content === 'X' && boxes[5].content === 'X') {
+    window.alert('X won');
+  }
+  if (boxes[6].content === 'X' && boxes[7].content === 'X' && boxes[8].content === 'X') {
+    window.alert('X won');
+  }
+  if (boxes[0].content === 'X' && boxes[4].content === 'X' && boxes[8].content === 'X') {
+    window.alert('X won');
+  }
+  if (boxes[2].content === 'X' && boxes[4].content === 'X' && boxes[6].content === 'X') {
+    window.alert('X won');
+  }
+  if (boxes[0].content === 'O' && boxes[1].content === 'O' && boxes[2].content === 'O') {
+    window.alert('O won');
+  }
+  if (boxes[3].content === 'O' && boxes[4].content === 'O' && boxes[5].content === 'O') {
+    window.alert('O won');
+  }
+  if (boxes[6].content === 'O' && boxes[7].content === 'O' && boxes[8].content === 'O') {
+    window.alert('O won');
+  }
+  if (boxes[0].content === 'O' && boxes[4].content === 'O' && boxes[8].content === 'O') {
+    window.alert('O won');
+  }
+  if (boxes[2].content === 'O' && boxes[4].content === 'O' && boxes[6].content === 'O') {
+    window.alert('O won');
+  } 
+
   return (
     <UserContext.Provider
       value={{
@@ -84,6 +122,7 @@ const UserProvider = ({ children }) => {
         turn,
         switchTurn,
         checkSpace,
+        resetGame,
       }}
     >
       {children}
