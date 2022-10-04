@@ -6,3 +6,7 @@
     border: 2px solid black;
     margin: 10px;
 }
+
+.not-clickable {
+    pointer-events: none;
+}

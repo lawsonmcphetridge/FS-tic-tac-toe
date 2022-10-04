@@ -7,11 +7,12 @@ export default function BoardList() {
   const { boxes } = useContext(UserContext);
   return (
     <div className='game-container'>
-      {boxes.map((box) => (
+      {boxes.map((box, i) => (
         <Box
           key={box.space}
           space={box.space}
           content={box.content}    
+          i={i}
         />
       ))}
     </div>

@@ -2,11 +2,10 @@ import { createContext, useState } from 'react';
 
 const UserContext = createContext();
 
-
 const UserProvider = ({ children }) => {
   const [currentPlayer, setCurrentPlayer] = useState();
   const [turn, setTurn] = useState('X');
-  const [active, setActive] = useState();
+  const [active, setActive] = useState(true);
   const [message, setMessage] = useState('');
   const [boxes, setBoxes] = useState([
     {
@@ -54,7 +53,15 @@ const UserProvider = ({ children }) => {
       });
     });
   };
-    
+
+  function checkSpace(content) {
+    let className = '';
+    if (content !== '') {
+      className = 'not-clickable';
+    }
+    return className;
+  }
+
   function switchTurn() {
     if (turn === 'X') {
       setTurn('O');
@@ -65,11 +72,23 @@ const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ currentPlayer, setCurrentPlayer, message, boxes, setMessage, setBoxes, setSpace, setTurn, turn, switchTurn }}
+      value={{
+        currentPlayer,
+        setCurrentPlayer,
+        message,
+        boxes,
+        setMessage,
+        setBoxes,
+        setSpace,
+        setTurn,
+        turn,
+        switchTurn,
+        checkSpace,
+      }}
     >
       {children}
     </UserContext.Provider>
   );
 };
 
-export { UserProvider, UserContext, };
+export { UserProvider, UserContext };
