@@ -5,8 +5,11 @@ const UserContext = createContext();
 const UserProvider = ({ children }) => {
   const [currentPlayer, setCurrentPlayer] = useState();
   const [turn, setTurn] = useState('X');
+  const [catsGame, setCatsGame] = useState(false);
   const [active, setActive] = useState(true);
   const [message, setMessage] = useState('');
+  const [winner, setWinner] = useState('');
+  const [winnerMessage, setWinnerMessage] = useState('');
   const [boxes, setBoxes] = useState([
     {
       space: 1,
@@ -77,36 +80,64 @@ const UserProvider = ({ children }) => {
     });
   };
 
-  if (boxes[0].content === 'X' && boxes[1].content === 'X' && boxes[2].content === 'X') {
-    window.alert('X won');
-  }
-  if (boxes[3].content === 'X' && boxes[4].content === 'X' && boxes[5].content === 'X') {
-    window.alert('X won');
-  }
-  if (boxes[6].content === 'X' && boxes[7].content === 'X' && boxes[8].content === 'X') {
-    window.alert('X won');
-  }
-  if (boxes[0].content === 'X' && boxes[4].content === 'X' && boxes[8].content === 'X') {
-    window.alert('X won');
-  }
-  if (boxes[2].content === 'X' && boxes[4].content === 'X' && boxes[6].content === 'X') {
-    window.alert('X won');
-  }
-  if (boxes[0].content === 'O' && boxes[1].content === 'O' && boxes[2].content === 'O') {
-    window.alert('O won');
-  }
-  if (boxes[3].content === 'O' && boxes[4].content === 'O' && boxes[5].content === 'O') {
-    window.alert('O won');
-  }
-  if (boxes[6].content === 'O' && boxes[7].content === 'O' && boxes[8].content === 'O') {
-    window.alert('O won');
-  }
-  if (boxes[0].content === 'O' && boxes[4].content === 'O' && boxes[8].content === 'O') {
-    window.alert('O won');
-  }
-  if (boxes[2].content === 'O' && boxes[4].content === 'O' && boxes[6].content === 'O') {
-    window.alert('O won');
-  } 
+  //   const isSpaceContent = (boxes) => {
+  //     if (boxes.content) {
+  //       return true;
+  //     }
+  //   };
+
+  const checkCatsGame = () => {
+    boxes.forEach((box) => {
+      if (!box.content) return null;
+    });
+    setCatsGame(true);
+  };
+
+  const checkWinner = () => {
+    if (boxes[0].content === 'X' && boxes[1].content === 'X' && boxes[2].content === 'X') {
+      setWinner('X');
+    }
+    if (boxes[3].content === 'X' && boxes[4].content === 'X' && boxes[5].content === 'X') {
+      setWinner('X');
+    }
+    if (boxes[6].content === 'X' && boxes[7].content === 'X' && boxes[8].content === 'X') {
+      setWinner('X');
+    }
+    if (boxes[0].content === 'X' && boxes[4].content === 'X' && boxes[8].content === 'X') {
+      setWinner('X');
+    }
+    if (boxes[2].content === 'X' && boxes[4].content === 'X' && boxes[6].content === 'X') {
+      setWinner('X');
+    }
+    if (boxes[0].content === 'O' && boxes[1].content === 'O' && boxes[2].content === 'O') {
+      setWinner('O');
+    }
+    if (boxes[3].content === 'O' && boxes[4].content === 'O' && boxes[5].content === 'O') {
+      setWinner('O');
+    }
+    if (boxes[6].content === 'O' && boxes[7].content === 'O' && boxes[8].content === 'O') {
+      setWinner('O');
+    }
+    if (boxes[0].content === 'O' && boxes[4].content === 'O' && boxes[8].content === 'O') {
+      setWinner('O');
+    }
+    if (boxes[2].content === 'O' && boxes[4].content === 'O' && boxes[6].content === 'O') {
+      setWinner('O');
+    }
+    return winner;
+  };
+  const checkGame = () => {
+    if (!active) return;
+    const gameWinner = checkWinner();
+    if (gameWinner) {
+      setActive(false);
+      setWinnerMessage(`${winner} wins`);
+    } else {
+      return null;
+    }
+  };
+
+  checkGame();
 
   return (
     <UserContext.Provider
@@ -123,6 +154,10 @@ const UserProvider = ({ children }) => {
         switchTurn,
         checkSpace,
         resetGame,
+        catsGame,
+        winner,
+        winnerMessage,
+        checkGame,
       }}
     >
       {children}
