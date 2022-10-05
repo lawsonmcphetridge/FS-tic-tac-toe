@@ -78,21 +78,23 @@ const UserProvider = ({ children }) => {
         return { ...box, content: '' };
       });
     });
+    setWinnerMessage('');
+    setTurn('X');
   };
 
-  //   const isSpaceContent = (boxes) => {
-  //     if (boxes.content) {
-  //       return true;
-  //     }
-  //   };
+  const isSpaceContent = (boxes) => {
+    if (boxes.content) {
+      return true;
+    }
+  };
 
   const checkCatsGame = () => {
-    boxes.forEach((box) => {
-      if (!box.content) return null;
-    });
-    setCatsGame(true);
+    if (boxes.every(isSpaceContent)) {
+      setCatsGame(true);
+      setActive(false);
+      setWinnerMessage('Cats game!');
+    }
   };
-
   const checkWinner = () => {
     if (boxes[0].content === 'X' && boxes[1].content === 'X' && boxes[2].content === 'X') {
       setWinner('X');
@@ -123,7 +125,10 @@ const UserProvider = ({ children }) => {
     }
     if (boxes[2].content === 'O' && boxes[4].content === 'O' && boxes[6].content === 'O') {
       setWinner('O');
+    } else {
+      checkCatsGame();
     }
+
     return winner;
   };
   const checkGame = () => {
@@ -158,6 +163,8 @@ const UserProvider = ({ children }) => {
         winner,
         winnerMessage,
         checkGame,
+        active,
+        setWinnerMessage,
       }}
     >
       {children}
