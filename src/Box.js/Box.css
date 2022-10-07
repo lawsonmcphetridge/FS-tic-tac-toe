@@ -1,0 +1,16 @@
+.single-space {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    margin: 10px;
+}
+
+.not-clickable {
+    pointer-events: none;
+}
+
+.game-over {
+    pointer-events: none;
+}
