@@ -10,3 +10,7 @@
 .not-clickable {
     pointer-events: none;
 }
+
+.game-over {
+    pointer-events: none;
+}

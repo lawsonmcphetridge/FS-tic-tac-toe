@@ -5,12 +5,13 @@ import './Box.css';
 
 
 export default function Box({ space, content }) {
-  const { setSpace, switchTurn, checkSpace, checkGame } = useContext(UserContext);
+  const { setSpace, switchTurn, checkSpace, checkGame, endGame } = useContext(UserContext);
   const className = checkSpace(content);
+  const endTheGame = endGame(content);
    
 
   return (
-    <div className={`${className} single-space`} onClick={() => {
+    <div className={`${className} ${endTheGame} single-space`} onClick={() => {
       setSpace(space);
       switchTurn();
       checkSpace(content);

@@ -72,6 +72,14 @@ const UserProvider = ({ children }) => {
     }
   }
 
+  function endGame() {
+    let className = '';
+    if (!active) {
+      className = 'game-over';
+    }
+    return className;
+  }
+
   const resetGame = () => {
     setBoxes((prevBoard) => {
       return prevBoard.map((box) => {
@@ -80,6 +88,8 @@ const UserProvider = ({ children }) => {
     });
     setWinnerMessage('');
     setTurn('X');
+    setWinner('');
+    setActive(true);
   };
 
   const isSpaceContent = (boxes) => {
@@ -99,6 +109,12 @@ const UserProvider = ({ children }) => {
     if (boxes[0].content === 'X' && boxes[1].content === 'X' && boxes[2].content === 'X') {
       setWinner('X');
     }
+    if (boxes[0].content === 'X' && boxes[3].content === 'X' && boxes[6].content === 'X') {
+      setWinner('X');
+    }
+    if (boxes[1].content === 'X' && boxes[4].content === 'X' && boxes[7].content === 'X') {
+      setWinner('X');
+    }
     if (boxes[3].content === 'X' && boxes[4].content === 'X' && boxes[5].content === 'X') {
       setWinner('X');
     }
@@ -115,6 +131,12 @@ const UserProvider = ({ children }) => {
       setWinner('O');
     }
     if (boxes[3].content === 'O' && boxes[4].content === 'O' && boxes[5].content === 'O') {
+      setWinner('O');
+    }
+    if (boxes[1].content === 'X' && boxes[4].content === 'X' && boxes[7].content === 'O') {
+      setWinner('O');
+    }
+    if (boxes[0].content === 'X' && boxes[3].content === 'X' && boxes[6].content === 'O') {
       setWinner('O');
     }
     if (boxes[6].content === 'O' && boxes[7].content === 'O' && boxes[8].content === 'O') {
@@ -165,6 +187,7 @@ const UserProvider = ({ children }) => {
         checkGame,
         active,
         setWinnerMessage,
+        endGame
       }}
     >
       {children}
